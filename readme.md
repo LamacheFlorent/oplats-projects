@@ -20,6 +20,16 @@ PAR
 
 DATABASE_URL="mysql://explorateur:Ereul9Aeng@127.0.0.1:3306/oplats?serverVersion=mariadb-10.3.38&charset=utf8mb4"
 
+`bin/console doctrine:database:create` pour créer la base de données (vide dans un premier temps)
+
+# Créer une entité
+
+`bin/console make:entity` permet de générer une entitée
+
+`bin/console make:migration` permet de migrer les données
+
+`bin/console doctrine:migrations:migrate` valider la migration
+
 
 
 
