@@ -37,10 +37,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $password;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Recipe::class, inversedBy="users")
-     */
-    private $recipe;
 
     /**
      * @ORM\OneToMany(targetEntity=Review::class, mappedBy="user")
@@ -52,11 +48,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $username;
 
-    public function __construct()
-    {
-        $this->recipe = new ArrayCollection();
-        $this->review = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -147,29 +138,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    /**
-     * @return Collection<int, Recipe>
-     */
-    public function getRecipe(): Collection
-    {
-        return $this->recipe;
-    }
-
-    public function addRecipe(Recipe $recipe): self
-    {
-        if (!$this->recipe->contains($recipe)) {
-            $this->recipe[] = $recipe;
-        }
-
-        return $this;
-    }
-
-    public function removeRecipe(Recipe $recipe): self
-    {
-        $this->recipe->removeElement($recipe);
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Review>
