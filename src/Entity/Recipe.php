@@ -30,14 +30,13 @@ class Recipe
     private $review;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Author::class, mappedBy="recipe")
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="recipe")
      */
-    private $authors;
+    private $users;
 
     public function __construct()
     {
-        $this->review = new ArrayCollection();
-        $this->authors = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -88,27 +87,27 @@ class Recipe
     }
 
     /**
-     * @return Collection<int, Author>
+     * @return Collection<int, User>
      */
-    public function getAuthors(): Collection
+    public function getUsers(): Collection
     {
-        return $this->authors;
+        return $this->users;
     }
 
-    public function addAuthor(Author $author): self
+    public function addUser(User $user): self
     {
-        if (!$this->authors->contains($author)) {
-            $this->authors[] = $author;
-            $author->addRecipe($this);
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addRecipe($this);
         }
 
         return $this;
     }
 
-    public function removeAuthor(Author $author): self
+    public function removeUser(User $user): self
     {
-        if ($this->authors->removeElement($author)) {
-            $author->removeRecipe($this);
+        if ($this->users->removeElement($user)) {
+            $user->removeRecipe($this);
         }
 
         return $this;

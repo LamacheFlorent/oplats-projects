@@ -33,9 +33,10 @@ class Review
     private $recipe;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="reviews")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="review")
      */
-    private $author;
+    private $user;
+
 
     public function getId(): ?int
     {
@@ -78,15 +79,16 @@ class Review
         return $this;
     }
 
-    public function getAuthor(): ?Author
+    public function getUser(): ?User
     {
-        return $this->author;
+        return $this->user;
     }
 
-    public function setAuthor(?Author $author): self
+    public function setUser(?User $user): self
     {
-        $this->author = $author;
+        $this->user = $user;
 
         return $this;
     }
+
 }
