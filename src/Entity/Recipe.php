@@ -29,15 +29,9 @@ class Recipe
      */
     private $review;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Author::class, mappedBy="recipe")
-     */
-    private $authors;
-
     public function __construct()
     {
         $this->review = new ArrayCollection();
-        $this->authors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -82,33 +76,6 @@ class Recipe
             if ($review->getRecipe() === $this) {
                 $review->setRecipe(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Author>
-     */
-    public function getAuthors(): Collection
-    {
-        return $this->authors;
-    }
-
-    public function addAuthor(Author $author): self
-    {
-        if (!$this->authors->contains($author)) {
-            $this->authors[] = $author;
-            $author->addRecipe($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAuthor(Author $author): self
-    {
-        if ($this->authors->removeElement($author)) {
-            $author->removeRecipe($this);
         }
 
         return $this;
