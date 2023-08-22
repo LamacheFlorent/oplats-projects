@@ -27,6 +27,16 @@ class Review
      */
     private $rate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Recipe::class, inversedBy="review")
+     */
+    private $recipe;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="reviews")
+     */
+    private $author;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +62,30 @@ class Review
     public function setRate(?string $rate): self
     {
         $this->rate = $rate;
+
+        return $this;
+    }
+
+    public function getRecipe(): ?Recipe
+    {
+        return $this->recipe;
+    }
+
+    public function setRecipe(?Recipe $recipe): self
+    {
+        $this->recipe = $recipe;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?Author $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
