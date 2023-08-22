@@ -22,14 +22,15 @@ DATABASE_URL="mysql://explorateur:Ereul9Aeng@127.0.0.1:3306/oplats?serverVersion
 
 `bin/console doctrine:database:create` pour créer la base de données (vide dans un premier temps)
 
-# Créer une entité
 
-`bin/console make:entity` permet de générer une entitée
+# Contraintes de validations formulaire
 
-`bin/console make:migration` permet de migrer les données
+Dans la fichier Entity/User
 
-`bin/console doctrine:migrations:migrate` valider la migration
-
+Dans le dockblok des la propiété d'une entitée, nous pouvons ajouter des contraintes de validation, par exemple :  
+- forcer l'utilisateur à remplir l'input avec "@Assert\NotBlank"
+- renseigner un email valide : @Assert\Email
+- écrire un mot de passe qui respecte une certaine longeur : @Assert\Length(min = 8, max = 20).
 
 
 
