@@ -44,6 +44,8 @@ Avec la commande `bin/console make:registration-form`:
 
 On ajoute à ces 3 fichiers la demande d'un "username"
 
+Pour la page d'enregistrement 
+
 ## Création de la page de connexion
 
 Avec la commande `bin/console make:auth`. 
