@@ -54,9 +54,9 @@ security:
 
         # Front : Si ROLE_USER : ajouter une critique sur un film, gérer ses favoris.
         # on "convertit" tout ou partie du chemin que l'on souhaite restreindre
-        # par ex. ici : @Route => /movie/{id}/review/add
-        # en vrai : /movie/8/review/add
-        - { path: ^/movie/\d+/review/add, roles: ROLE_USER }
+        # par ex. ici : @Route => /login/{id}/review/add
+        # en vrai : /login/8/review/add
+        - { path: ^/login/\d+/review/add, roles: ROLE_USER }
         # tout chemin qui commence par /favorites
         - { path: ^/favorites, roles: ROLE_USER }
 
@@ -64,12 +64,12 @@ security:
         # @see https://symfony.com/doc/5.4/security.html#add-code-to-deny-access
         # => on place les routes les plus "secures" en premier
         # Admin : Sécuriser toutes les routes d'ajout, modification/ suppression avec ROLE_ADMIN.
-        - { path: ^/back/movie/new, roles: ROLE_ADMIN }
-        - { path: ^/back/movie/\d+/edit, roles: ROLE_ADMIN }
+        - { path: ^/back/login/new, roles: ROLE_ADMIN }
+        - { path: ^/back/login/\d+/edit, roles: ROLE_ADMIN }
         # attention l'action delete partage le même "path" que show, mais pas la même méthode HTTP
         # on ajoute donc ici une condition pour la méthode POST (formulaire de suppression)
-        - { path: ^/back/movie/\d+, methods: POST, roles: ROLE_ADMIN }
-        # Admin : Si ROLE_MANAGER : accès aux pages de listes movie, genres etc. et pages show (si existantes).
+        - { path: ^/back/login/\d+, methods: POST, roles: ROLE_ADMIN }
+        # Admin : Si ROLE_MANAGER : accès aux pages de listes login, genres etc. et pages show (si existantes).
         - { path: ^/back, roles: ROLE_MANAGER }
         - { path: ^/api, roles: PUBLIC_ACCESS } # indique que l'accès a la route /api/login est publique
         - { path: ^/api/secure, roles: IS_AUTHENTICATED_FULLY } # indique que l'acces a tout ce qui commence par /api nécéssite une authentification
