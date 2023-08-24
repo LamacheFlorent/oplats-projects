@@ -14,6 +14,20 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        login:
+            pattern: ^/api/login 
+            stateless: true 
+            json_login: 
+                check_path: /api/login_check 
+                success_handler: lexik_jwt_authentication.handler.authentication_success 
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure 
+        api_secure: 
+            pattern: ^/api/secure
+            stateless: true
+            jwt: ~
+        api_public:
+            pattern: ^/api
+            stateless: true
         main:
             json_login:
                 # api_login is a route we will create below
@@ -35,9 +49,37 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+                # Front : Si user ANONYME : page d'accueil + fiche film seulement
+        # => rien à faire, c'est ouvert par défaut
 
+        # Front : Si ROLE_USER : ajouter une critique sur un film, gérer ses favoris.
+        # on "convertit" tout ou partie du chemin que l'on souhaite restreindre
+        # par ex. ici : @Route => /movie/{id}/review/add
+        # en vrai : /movie/8/review/add
+        - { path: ^/movie/\d+/review/add, roles: ROLE_USER }
+        # tout chemin qui commence par /favorites
+        - { path: ^/favorites, roles: ROLE_USER }
+
+        # /!\ Attention l'ordre est crucial / au premier chemin trouvé, on s'arrête
+        # @see https://symfony.com/doc/5.4/security.html#add-code-to-deny-access
+        # => on place les routes les plus "secures" en premier
+        # Admin : Sécuriser toutes les routes d'ajout, modification/ suppression avec ROLE_ADMIN.
+        - { path: ^/back/movie/new, roles: ROLE_ADMIN }
+        - { path: ^/back/movie/\d+/edit, roles: ROLE_ADMIN }
+        # attention l'action delete partage le même "path" que show, mais pas la même méthode HTTP
+        # on ajoute donc ici une condition pour la méthode POST (formulaire de suppression)
+        - { path: ^/back/movie/\d+, methods: POST, roles: ROLE_ADMIN }
+        # Admin : Si ROLE_MANAGER : accès aux pages de listes movie, genres etc. et pages show (si existantes).
+        - { path: ^/back, roles: ROLE_MANAGER }
+        - { path: ^/api, roles: PUBLIC_ACCESS } # indique que l'accès a la route /api/login est publique
+        - { path: ^/api/secure, roles: IS_AUTHENTICATED_FULLY } # indique que l'acces a tout ce qui commence par /api nécéssite une authentification
+
+    # on décide de faire hériter tous les rôles en cascade
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_MANAGER
+        ROLE_MANAGER: ROLE_USER
+    # ADMIN aura les rôles MANAGER et USER
+    # MANAGER aura aussi le rôle USER
 when@test:
     security:
         password_hashers:
