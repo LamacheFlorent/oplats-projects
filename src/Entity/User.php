@@ -55,6 +55,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $recipe;
 
+     /**
+      * @ORM\Column(type="string", unique=true, nullable=true)
+      */
+     private $apiToken;
+
     public function __construct()
     {
         $this->recipe = new ArrayCollection();
@@ -211,4 +216,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+     /**
+      * Get the value of apiToken
+      */ 
+     public function getApiToken()
+     {
+          return $this->apiToken;
+     }
+
+     /**
+      * Set the value of apiToken
+      *
+      * @return  self
+      */ 
+     public function setApiToken($apiToken)
+     {
+          $this->apiToken = $apiToken;
+
+          return $this;
+     }
 }
