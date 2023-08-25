@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/api/users", name="app_api_users", methods={"GET"})
+     * @Route("/", name="app_api_users", methods={"GET"})
      */
     public function allUsers(UserRepository $userRepository): JsonResponse
     {
