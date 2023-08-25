@@ -13,17 +13,6 @@ CREATE TABLE `doctrine_migration_versions` (
   PRIMARY KEY (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
-('DoctrineMigrations\\Version20230821144659',	'2023-08-21 16:47:27',	439),
-('DoctrineMigrations\\Version20230822080940',	'2023-08-22 10:09:55',	873),
-('DoctrineMigrations\\Version20230822093042',	'2023-08-22 11:30:55',	311),
-('DoctrineMigrations\\Version20230822093823',	'2023-08-22 11:38:36',	822),
-('DoctrineMigrations\\Version20230822094117',	'2023-08-22 11:41:56',	71),
-('DoctrineMigrations\\Version20230822114018',	'2023-08-22 13:40:44',	220),
-('DoctrineMigrations\\Version20230822145232',	'2023-08-22 16:52:49',	90),
-('DoctrineMigrations\\Version20230823121405',	'2023-08-23 14:14:20',	191),
-('DoctrineMigrations\\Version20230823203048',	'2023-08-23 22:31:09',	622),
-('DoctrineMigrations\\Version20230824115122',	'2023-08-24 13:51:37',	132);
 
 SET NAMES utf8mb4;
 
@@ -1485,7 +1474,6 @@ CREATE TABLE `user` (
   `roles` longtext NOT NULL COMMENT '(DC2Type:json)',
   `password` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
-  `api_token` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`),
   UNIQUE KEY `UNIQ_8D93D649F85E0677` (`username`),
