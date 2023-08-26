@@ -25,7 +25,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"api:users"})
+     * @Groups({"back:users"})
      */
     private $email;
 
@@ -38,7 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"api:users"})
+     * @Groups({"back:users"})
      */
     private $password;
 

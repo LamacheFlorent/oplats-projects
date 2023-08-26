@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Back;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -14,17 +14,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/api/users", name="app_api_users", methods={"GET"})
+     * @Route("/back/users", name="app_back_users", methods={"GET"})
      */
     public function allUsers(UserRepository $userRepository): JsonResponse
     {
         $allUsers = $userRepository->findAll();
 
-        return $this->json($allUsers, 200, [], ['groups' => 'api:users']);
+        return $this->json($allUsers, 200, [], ['groups' => 'back:users']);
     }
 
     /**
-     * @Route("/api/users", name="api_users_post", methods={"POST"})
+     * @Route("/back/users", name="back_users_post", methods={"POST"})
      */
     public function createUsers(Request $request, SerializerInterface $serializer, ManagerRegistry $managerRegistry)
     {
@@ -37,7 +37,7 @@ class UserController extends AbstractController
             $user,
             201,
             [],
-            ['groups' => 'api:users']
+            ['groups' => 'back:users']
             );
         }
 }
