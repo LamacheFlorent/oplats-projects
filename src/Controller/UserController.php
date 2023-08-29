@@ -13,8 +13,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
 {
+
     /**
-     * @Route("/", name="app_api_users", methods={"GET"})
+     * Retourne l'email et le password d'un utilisateur en JSON
+     * @Route("/api/users", name="app_api_users", methods={"GET"})
      */
     public function allUsers(UserRepository $userRepository): JsonResponse
     {
@@ -23,21 +25,5 @@ class UserController extends AbstractController
         return $this->json($allUsers, 200, [], ['groups' => 'api:users']);
     }
 
-    /**
-     * @Route("/api/users", name="api_users_post", methods={"POST"})
-     */
-    public function createUsers(Request $request, SerializerInterface $serializer, ManagerRegistry $managerRegistry)
-    {
-        $jsonContent = $request->getContent();
-        $user = $serializer->deserialize($jsonContent, User::class, 'json');
-        $entityManager = $managerRegistry->getManager();
-        $entityManager->persist($user);
-        $entityManager->flush();
-        return $this->json(
-            $user,
-            201,
-            [],
-            ['groups' => 'api:users']
-            );
-        }
+   
 }
