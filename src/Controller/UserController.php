@@ -16,7 +16,7 @@ class UserController extends AbstractController
 
     /**
      * Retourne l'email et le password d'un utilisateur en JSON
-     * @Route("/api/users", name="app_api_users", methods={"GET"})
+     * @Route("/api/users", name="app_api_users", methods={"POST"})
      */
     public function allUsers(UserRepository $userRepository): JsonResponse
     {
