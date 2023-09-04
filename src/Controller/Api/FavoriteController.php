@@ -59,4 +59,47 @@ class FavoriteController extends AbstractController
             "La recette '$code_api' a bien été ajoutée aux favoris de l'utilisateur",
         ], 201);
     }
+
+    /**
+     * @Route("/api/favorites/remove/{code_api}", name="app_favorite_remove", methods={"DELETE"})
+     */
+    public function removeFavorite(
+        Request $request,
+        RecipeRepository $recipeRepository,
+        EntityManagerInterface $em
+    ): JsonResponse {
+
+        
+        /** @var App\Entity\User $user */
+        $user = $this->getUser();
+
+        if (!$user) {
+            $this->json([
+                'message' => 'Utilisateur non connecté. Fournir le JWT.'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $code_api = $request->get('code_api');
+
+        
+        $recipe = $recipeRepository->findOneByCodeApi($code_api);
+
+        
+        if (!$recipe) {
+            $recipe = new Recipe();
+
+            $recipe->setCodeApi($code_api);
+
+            $em->persist($recipe);
+            $em->flush();
+        }
+
+        $user->removeFavorite($recipe);
+
+        $em->flush();
+
+        return $this->json([
+            "La recette '$code_api' a bien été supprimée aux favoris de l'utilisateur",
+        ], 201);
+    }
 }

@@ -84,7 +84,10 @@ class UserController extends AbstractController
      */
     public function removeUserFavorite(): JsonResponse
     {
-        
+        /** @var App\Entity\User $user */
+        $user = $this->getUser();
+
+        return $this->json($user->removeFavorite(), 200, [], ['groups' => 'api:recipe:read']);
     }
 
     /**
