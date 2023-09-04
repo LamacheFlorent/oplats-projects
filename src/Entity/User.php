@@ -51,6 +51,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $favorites;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"api:users"})
+     */
+    private $nickname;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -196,6 +202,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeFavorite(Recipe $favorite): self
     {
         $this->favorites->removeElement($favorite);
+
+        return $this;
+    }
+
+    public function getNickname(): ?string
+    {
+        return $this->nickname;
+    }
+
+    public function setNickname(string $nickname): self
+    {
+        $this->nickname = $nickname;
 
         return $this;
     }

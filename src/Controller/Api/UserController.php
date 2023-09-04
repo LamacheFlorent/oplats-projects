@@ -31,15 +31,16 @@ class UserController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         // On vérifie si il manque pas l'email ou le password
-        if (!isset($data['email']) || !isset($data['password']) || empty($data['email']) || empty($data['password'])) {
+        if (!isset($data['email']) || !isset($data['password'])|| !isset($data['nickname']) || empty($data['email']) || empty($data['password'])|| empty($data['nickname'])) {
             return $this->json([
                 'message' => "L'email ou le mot de passe est vide."
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        // On récupère l'email et le password présents dans ce tableau
+        // On récupère l'email, nickname et le password présents dans ce tableau
         $email = $data['email'];
         $password = $data['password'];
+        $nickname = $data['nickname'];
 
 
         // On vérifie si l'utilisateur n'existe pas déjà
@@ -59,6 +60,7 @@ class UserController extends AbstractController
         $user->setEmail($email);
         $user->setPassword($hashedPassword);
         $user->setRoles(['ROLE_USER']);
+        $user->setNickname($nickname);
 
         // On l'ajoute à la bdd
         $em->persist($user);
