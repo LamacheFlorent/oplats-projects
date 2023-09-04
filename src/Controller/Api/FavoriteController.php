@@ -61,7 +61,7 @@ class FavoriteController extends AbstractController
     }
 
     /**
-     * @Route("/api/favorites/remove/{code_api}", name="app_favorite_remove", methods={"DELETE"})
+     * @Route("/api/users/me/favorites/remove/{code_api}", name="app_favorite_remove", methods={"DELETE"})
      */
     public function removeFavorite(
         Request $request,
