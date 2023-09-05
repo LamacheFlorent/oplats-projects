@@ -83,12 +83,11 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/api/users", name="app_user", methods={"POST"})
+     * @Route("/api/users", name="app_user", methods={"GET", "POST"})
      */
     public function allUsers(UserRepository $userRepository): JsonResponse
     {
         $allUsers = $userRepository->findAll();
-        dd($allUsers);
 
         return $this->json($allUsers, 200, [], ['groups' => 'api:users']);
     }
