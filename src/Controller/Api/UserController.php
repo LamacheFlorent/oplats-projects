@@ -88,6 +88,7 @@ class UserController extends AbstractController
     public function allUsers(UserRepository $userRepository): JsonResponse
     {
         $allUsers = $userRepository->findAll();
+        dd($allUsers);
 
         return $this->json($allUsers, 200, [], ['groups' => 'api:users']);
     }
