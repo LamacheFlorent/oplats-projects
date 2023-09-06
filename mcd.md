@@ -1,0 +1,9 @@
+// TABLES
+RECIPE: code_api
+REVIEW: comment, note
+USER: email, password
+
+// RELATIONS
+HAS, 0N RECIPE, 11 REVIEW
+WRITE, 11 REVIEW, 0N USER
+LIKE, 0N USER, 0N RECIPE
