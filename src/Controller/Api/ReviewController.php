@@ -93,8 +93,10 @@ class ReviewController extends AbstractController
     }
 
 
+    
+
     /**
-     * @Route("/api/reviews/{id}", name="app_reviews_recipe", methods={"GET"})
+     * @Route("/api/reviews/{id}", name="app_reviews_recipe_nickname", methods={"GET"})
      */
     public function showReview(int $id, ReviewRepository $reviewRepository): JsonResponse
     {
@@ -105,10 +107,15 @@ class ReviewController extends AbstractController
             throw $this->createNotFoundException(('comment not found'));
         }
 
+        $user = $review->getUser();
+
         $data =[
             'comment'=>$review->getComment(),
-            'user'=>$review->getUser(),
-            'rate'=>$review->getNote()
+            'user'=>[
+                'id'=>$user->getId(),
+                'nickname'=>$user->getNickname(),
+            ],
+            'rate'=>$review->getNote(),
         ];
 
         return $this->json($review, 200, [], ['groups' => 'api:review']);
