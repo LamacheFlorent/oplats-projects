@@ -68,7 +68,7 @@ class ReviewController extends AbstractController
         // si c'est le cas, ne pas autoriser l'ajout d'une nouvelle review, donc retourner une réponse json avec le message
         // "vous avez déjà review cette recette"
 
-        // Récupérer les données de la review, devront être envoyé comme ça : 
+        // Récupérer les données de la review, devront être envoyé comme ça :
         /*
         {
             "comment": "mon comment",
@@ -90,5 +90,28 @@ class ReviewController extends AbstractController
 
         // On renvoit une réponse 201 (pour http created)
         return $this->json($newReview, Response::HTTP_CREATED, [], ['groups' => 'api:review']);
+    }
+
+
+    /**
+     * @Route("/api/reviews/{id}", name="app_reviews_recipe", methods={"GET"})
+     */
+    public function showReview(int $id, ReviewRepository $reviewRepository): JsonResponse
+    {
+
+        $review = $reviewRepository->find($id);
+
+        if (!$review){
+            throw $this->createNotFoundException(('comment not found'));
+        }
+
+        $data =[
+            'comment'=>$review->getComment(),
+            'user'=>$review->getUser(),
+            'rate'=>$review->getNote()
+        ];
+
+        return $this->json($review, 200, [], ['groups' => 'api:review']);
+
     }
 }
