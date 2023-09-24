@@ -1,26 +1,28 @@
 <?php
-
-namespace App\Controller\Api;
+    // src\Controller\ExternalApiController.php
+ 
+namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class ApiRecipeController extends AbstractController
+ 
+class ExternalApiController extends AbstractController
 {
     /**
-     * @Route("/api/recipes", name="api_recipes_list", methods={"GET"})
+     * take and send data
+     * @param HttpClientInterface $httpClient
+     * @return JsonResponse
      */
-    public function list()
+    #[Route('/api/external/getSfDoc', name: 'external_api', methods: 'GET')]
+            public function getSymfonyDoc(HttpClientInterface $httpClient): JsonResponse
     {
-        $recipes = [
-            // Données de recettes ici
-        ];
-
-        // Vous pouvez récupérer les données depuis la base de données ici
-
-        return new JsonResponse($recipes);
+        $response = $httpClient->request(
+            'GET',
+            'https://www.themealdb.com/api/json/v1/1/search.php?s='
+        );
+        return new JsonResponse($response->getContent(), $response->getStatusCode(), [], true);
     }
 }
